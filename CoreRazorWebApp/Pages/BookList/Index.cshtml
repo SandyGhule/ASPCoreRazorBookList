@@ -1,0 +1,53 @@
+﻿@page
+@model CoreRazorWebApp.Pages.BookList.IndexModel
+@{
+}
+
+<h3>Book Index</h3>
+
+<div class="container row p-0 m-0">
+    <div class="col-9">
+        <h2 class="text-info">Book List</h2>
+    </div>
+    <div class="col-3">
+        <a class="btn btn-info form-control" asp-page="create" >Create new Book</a>
+    </div>
+</div>
+
+<div class="col-12 border p-3 m-3">
+<form method="post">
+    @if(Model.Books.Count()>0)
+    {
+        <table class="table table-striped border">
+            <tr class="table-secondary">
+                <th>
+                    <label asp-for="Books.FirstOrDefault().Name"></label>
+                </th>
+                 <th>
+                     <label asp-for="Books.FirstOrDefault().Autor"></label>
+                 </th>
+            </tr>
+                @foreach (var item in Model.Books)
+                {
+                    <tr>
+                       <td>
+                           @Html.DisplayFor(m=>item.Name)
+                       </td>
+                        <td>
+                            @Html.DisplayFor(m=>item.Autor)
+                        </td>
+                        <td>
+                            <button asp-page-handler="Delete" asp-route-id="@item.Id" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">Delete</button>
+                            <a asp-page="edit" asp-route-id="@item.Id" class="btn btn-success btn-sm">Edit</a>
+                        </td>
+                    </tr>
+                }
+        </table> 
+    }
+    else
+    {
+        <h3>Books are not available</h3>
+    }
+
+</form>
+</div>
